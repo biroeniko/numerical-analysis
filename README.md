@@ -21,6 +21,8 @@ The basic requirements for building the executable are:
 ```
 sudo apt-get install octave
 ```
+### Usage instructions
+There are several test cases for each file on the top of the file. If you experience any problems running the examples, please contact me.
 
 ## Authors
 
