@@ -7,27 +7,29 @@
 % TESZT 
 % ================================
 % f = @(x) (cos(x) - x)
-% df = @(x) (-sin(x) - 1)
-% NewtonRaphson(f, df, pi/4, eps, 10)
+% HurModszer(f, eps, 0.5, pi/4, 10)
 % ================================
 
-function result = NewtonRaphson(f, df, x0, epszilon, maxIter)
+
+function result = HurModszer(f, epszilon, x0, x1, maxIter)
     % konvergencia feltetel
     % KELL TUDNI, HOGY MIERT VALASZTOTTAM EN EZT az x0-at UGY, AHOGY
     % pl. f'' = diff(df); -> van a konvergencia feltetel, vagyis
     % f(x0)*f''(x0) > 0
     
-    x = size(maxIter);
-    x(1) = x0;
-    prev_x = x0;
+    x = x1;
+    prev_x = x1;
+    prev_prev_x = x0;
     i = 1;
     
     while true
-        x(i+1) = prev_x - f(prev_x)/df(prev_x);
-        if (i >= maxIter || abs(x(i+1) - prev_x) < epszilon)
+        x = prev_x - (f(prev_x)*(prev_x - prev_prev_x))/(f(prev_x) - f(prev_prev_x));
+        if (i >= maxIter || abs(x - prev_x) < epszilon)
             break;
         end
-        prev_x = x(i+1);
+        
+        prev_prev_x = prev_x;
+        prev_x = x;
         i = i + 1;
     end
     
@@ -37,7 +39,7 @@ function result = NewtonRaphson(f, df, x0, epszilon, maxIter)
         disp('A leallas az epszilon alapjan tortent');
     end
     
-    disp('A fuggvenyertek kozelitesi erteke:');
+    disp('A gyok kozelitesi erteke:');
     result = x;
-    disp(result(i+1));
+    disp(result);
 end
